@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Paytm merchant payment page</title>
+</head>
+<body>
+<h1>Redirecting you to the merchant....</h1>
+<h1>Please do not refresh your page....</h1>
+<form action="https://securegw-stage.paytm.in/theia/processTransaction" method="post" name="paytm">
+    {% for key,value in param_dict.items %}
+        <input type="hidden" name="{{key}}" value="{{value}}">
+    {%endfor%}
+</form>
+</body>
+<script>
+<!--this page is use to redirect our website to the paytm site-->
+<!--it is method to submit the form without using submit button-->
+<!--and here paytm is the name of the form-->
+<!--here we can also submit using id of the form tag-->
+document.paytm.submit()
+</script>
+</html>

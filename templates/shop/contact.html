@@ -1,0 +1,113 @@
+{% extends 'shop/basic.html' %}
+
+{% block title%} Contact Us - My Awesome Cart{% endblock %}
+{% block body %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/shop">My Awesome Cart</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/shop">Home </a>
+      </li>
+         <li class="nav-item">
+        <a class="nav-link" href="/shop/checkout">Checkout</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/shop/about">About Us</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/shop/tracker">Tracker</a>
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" href="/shop/contact">Contact Us<span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/blog">Blog</a>
+      </li>
+    </ul>
+     <form method='get' action='/shop/search/' class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search" id="search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <button type="button" class="btn btn-secondary mx-2" id="popcart" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Vivamus
+sagittis lacus vel augue laoreet rutrum faucibus.">
+
+
+  Cart(<span id="cart">0</span>)
+</button>
+  </div>
+</nav>
+<div class="container my-3">
+    <h3>Contact Us</h3>
+    <form action="" method="post">{% csrf_token %}
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" name='name' placeholder="Enter Your Name" pattern="[a-zA-Z]{2,15}" required>
+  </div>
+  <div class="form-group">
+    <label for="name">Email</label>
+    <input type="email" class="form-control" id="email" name='email' placeholder="Enter Your Email" pattern="[a-zA-Z-._:/]{2,30}@[a-z]{2,10}.[a-z]{2,5}" required>
+  </div>
+
+    <div class="form-group">
+    <label for="phone">Phone</label>
+    <input type="tel" class="form-control" id="phone" name='phone' placeholder="Enter Your Phone Number" pattern="[0-9]{10}" required>
+  </div>
+      <div class="form-group">
+        <label for="ipAdress">IP address</label>
+        <input type="digit" class="form-control" id="ipAdress" name="ipAdress" pattern="([0-9].|[1-9][0-9].|1[0-9][0-9].|2[0-4][0-9].|2[5][0-5].){3}[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|[2][5][0-5]" required>
+      </div>
+   <div class="form-group">
+    <label for="desc">How May We Help You?</label>
+    <textarea class="form-control" id="desc" name="desc" rows="3" required></textarea>
+  </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+</form>
+
+
+
+</div>
+{% endblock %}
+{% block js %}
+<script>
+
+console.log('working');
+if(localStorage.getItem('cart') == null){
+var cart = {};
+}
+else
+{
+cart = JSON.parse(localStorage.getItem('cart'));
+
+document.getElementById('cart').innerHTML = Object.keys(cart).length;
+}
+$('.cart').click(function(){
+console.log('clicked');
+var idstr = this.id.toString();
+console.log(idstr);
+if (cart[idstr] !=undefined){
+cart[idstr] = cart[idstr] + 1;
+}
+else
+{
+cart[idstr] = 1;
+}
+console.log(cart);
+localStorage.setItem('cart', JSON.stringify(cart));
+document.getElementById('cart').innerHTML = Object.keys(cart).length;
+});
+$('#popcart').popover();
+{% if thank %}
+alert('Thanks for contacting with us.');
+localStorage.clear();
+document.location = "/shop/contact";
+{% endif %}
+</script>
+{% endblock %}
