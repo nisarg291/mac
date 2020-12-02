@@ -1,0 +1,42 @@
+{% extends 'shop/basic.html' %}
+{% block title%} PayPal merchant payment page{% endblock %}
+{% block body %}
+{% load static %}
+<p>Redirecting you to the merchant....</p>
+<p>Please do not refresh your page during payment process....</p>
+<p>click any button for payment and your amount is ${{amount}} and order id is {{id}}</p>
+<script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
+ <div id="paypal-button-container"></div>
+<input type="hidden" value="{{amount}}" id="amount">
+<input type="hidden" value="{{id}}" id="id1">
+<input type="hidden" value="{{name}}" id="name">
+<script>
+var a=parseInt(document.getElementById('amount').value);
+var id1=document.getElementById('id1').value;
+var name=document.getElementById('name').value;
+  paypal.Buttons({
+    createOrder: function(data, actions) {
+      // This function sets up the details of the transaction, including the amount and line item details.
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: a
+          }
+        }]
+      });
+    },
+    onApprove: function(data, actions) {
+      // This function captures the funds from the transaction.
+      return actions.order.capture().then(function(details) {
+        // This function shows a transaction success message to your buyer.
+        alert('Transaction completed by ' + name +" and transaction id is " +id1);
+        localStorage.clear();
+        console.log("mail");
+        document.location = "";
+      });
+    }
+  }).render('#paypal-button-container');
+  //This function displays Smart Payment Buttons on your web page.
+
+</script>
+{% endblock %}

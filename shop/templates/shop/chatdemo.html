@@ -1,0 +1,233 @@
+{% extends 'shop/basic.html' %}
+
+{% block title%} Search Results - My Awesome Cart{% endblock %}
+
+
+{% block css %}
+      html,
+      body {
+        background:cyan;
+        height: 100%; 
+      }
+input{
+  border-radius:10px !important;
+  border-color: red;
+}
+input:focus{
+  border-radius:10px !important;
+  border-color: red;
+}
+input:hover{
+  border-radius:10px !important;
+  border-color: red;
+}
+input:active{
+  border-radius:10px !important;
+  border-color: red;
+}
+.col-md-3
+{
+display: inline-block;
+margin-left:-4px;
+}
+.carousel-indicators .active {
+background-color: blue;
+}
+.col-md-3 img{
+width: 170px;
+height: 200px;
+}
+body .carousel-indicator li{
+background-color: blue;
+}
+body .carousel-indicators{
+bottom: -40px;
+}
+.ans{
+}
+.ans:hover{
+  animation-name: runme1;
+	animation-duration:4s;
+  animation-iteration-count: infinite; 
+  z-index:5;
+  box-shadow:5px 10px #888888;
+}
+@keyframes runme1{
+	from{
+		-ms-transform: perspective( 600px ); /* IE 9 */
+    -webkit-transform: perspective( 600px );
+		transform:  perspective( 600px );
+		background-color: lightYellow;
+    z-index:5;
+    box-shadow:5px 5px lightGrey;
+    border-radius:5px;
+
+	}
+	to{
+		/*transform: rotate(360deg);*/
+		-ms-transform: perspective( 600px ); /* IE 9 */
+    	-webkit-transform: perspective( 600px ); /* Chrome, Safari, Opera */
+    	transform: perspective( 600px );
+    	background-color: orange;
+      z-index:20;
+      box-shadow:10px 10px lightGrey;
+      border-radius:15px;
+
+	}
+}
+.chat{
+}
+.chat:hover{
+  animation-name: runme;
+	animation-duration:4s;
+  animation-iteration-count: infinite; 
+  z-index:5;
+  box-shadow:5px 10px #888888;
+}
+@keyframes runme{
+	from{
+		-ms-transform: perspective( 600px ); /* IE 9 */
+    -webkit-transform: perspective( 600px );
+		transform:  perspective( 600px );
+		background-color: lightYellow;
+    z-index:5;
+    box-shadow:5px 5px lightGrey;
+    border-radius:5px;
+
+	}
+	to{
+		/*transform: rotate(360deg);*/
+		-ms-transform: perspective( 600px ); /* IE 9 */
+    	-webkit-transform: perspective( 600px ); /* Chrome, Safari, Opera */
+    	transform: perspective( 600px );
+    	background-color: lightGreen;
+      z-index:20;
+      box-shadow:10px 10px lightGrey;
+      border-radius:15px;
+
+	}
+}
+.container::before{
+  background-color:#00F0F0;
+  content: "";
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100vw;
+  height: 130vh;
+  z-index: -1;
+  opacity:0.6;
+}
+.carousel-indicators li {
+
+
+    background-color: #7270fc;
+}
+body .carousel-control-prev-icon,
+body .carousel-control-next-icon{
+background-color: blue;
+}
+.carousel-control-prev,
+.carousel-control-next{
+top: auto;
+bottom: auto;
+padding-top: 222px;
+}
+body .no-padding{
+padding-left: 0,
+padding-right: 0;
+}
+{% endblock %}
+{% block body %}
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/shop">My Awesome Cart</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/shop">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/shop/about">About Us</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/shop/tracker">Tracker</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/shop/contact">Contact Us</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/blog">Blog</a>
+      </li>
+    </ul>
+     <form method='get' action='/shop/search/' class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search" id="search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <button type="button" class="btn btn-secondary mx-2" id="popcart" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Vivamus
+sagittis lacus vel augue laoreet rutrum faucibus.">
+  Cart(<span id="cart">0</span>)
+</button>
+  </div>
+</nav>
+<div class="container mt-4">
+    chat <input type='text' class='mt-3 mb-3 col-12 col-md-6 ml-auto' " id="request">
+    <input type="button" value="send" class="ml-auto btn btn-success" onclick="chatbot()"> 
+    <div id="response" class="col-12 mt-5 col-md-8">
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    function chatbot(){
+        const xhr = new XMLHttpRequest();
+        const csrftoken = getCookie('csrftoken')
+        const response=document.getElementById('response');
+        const request=document.getElementById('request');
+        // Open the object
+        document.getElementById('response').innerHTML +=`<div class="mt-3 alert alert-info col-9 col-md-8 chat" role="alert"><font color='green'><b>you</b></font>: `+request.value+`</div>`;
+        xhr.open('GET', 'chatbot/'+request.value, true);
+        xhr.setRequestHeader("Content-Type", "application/json")
+        xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
+        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
+        xhr.setRequestHeader("X-CSRFToken", csrftoken)
+        xhr.onload = function() {
+      //react.js
+            if (xhr.status === 200) {
+               // handleTweetFormError("", false)
+                const newTweetJson = xhr.response
+                console.log(newTweetJson)
+                document.getElementById('response').innerHTML +=`<div class="mt-3 alert alert-dark offset-3 offset-md-4 col-9 col-md-8 justify-item-right ans" role="alert"><font color='lightRed'><b>Chatbot Nis</b></font>: `+newTweetJson+`</div>`;
+                //myForm.reset()
+            }
+            console.log("on load")
+      //loadTweets(tweetsContainerElement)
+        }
+    xhr.send()
+    request.value=''
+    }
+</script>
+
+{% endblock %}

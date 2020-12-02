@@ -1,0 +1,165 @@
+{% extends 'shop/basic.html' %}
+{% block title%} Checkout - My Awesome Cart{% endblock %}
+{% block css %}
+.q1{
+<!--    position:fixed;-->
+}
+.container::before{
+  background-color:#00F0F0;
+  content: "";
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100vw;
+  height: 130vh;
+  z-index: -1;
+  opacity:0.6;
+}
+{%endblock%}
+{% block body %}
+ <script
+    src="https://www.paypal.com/sdk/js?client-id=SB_CLIENT_ID">
+  </script>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/shop">My Awesome Cart</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/shop">Home </a>
+      </li>
+        <li class="nav-item active">
+        <a class="nav-link" href="/shop/checkout">Checkout<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/shop/about">About Us</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/shop/tracker">Tracker</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/shop/contact">Contact Us</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/blog">Blog</a>
+      </li>
+    </ul>
+     <form method='get' action='/shop/search/' class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search" id="search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <button type="button" class="btn btn-secondary mx-2" id="popcart" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Vivamus
+sagittis lacus vel augue laoreet rutrum faucibus.">
+
+
+  Cart(<span id="cart">0</span>)
+</button>
+  </div>
+</nav>
+<div class="container">
+    <div class="col my-4">
+        <h2>Step 1 - My Awesome Cart Express Checkout - Review Your Cart Items</h2>
+        <div class="my-4">
+            <ul class="list-group" id="items">
+            </ul>
+        </div>
+    </div>
+    <div class="col my-4">
+        <h2>Step 2 - Enter Address & Other Details:</h2>
+        <form method="post" action="/shop/checkout">{% csrf_token %}
+            <input type="hidden" name="itemsJson" id="itemsJson">
+            <input type="hidden" name="amount" id="amount">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputname">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" pattern="[a-zA-Z]{3,25}" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" pattern="[a-z0-9,-._]{3,20}@[a-z]{3,7}.[a-z]{2,5}" placeholder="Email" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputAddress">Address</label>
+                <input type="text" class="form-control" id="address1" name="address1" placeholder="1234 Main St" required>
+            </div>
+            <div class="form-group">
+                <label for="inputAddress2">Address line 2</label>
+                <input type="text" class="form-control" id="address2" name="address2" placeholder="Apartment, studio, or floor" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputCity">City</label>
+                    <input type="text" class="form-control" id="city" name="city" pattern="[a-z]{3,20}" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">State</label>
+                    <input type="text" class="form-control" id="state" name="state" pattern="[a-z]{3,20}" placeholder="Enter State" required>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputZip">Zip</label>
+                    <input type="text" class="form-control" id="zip_code" name="zip_code" pattern="[0-9]{6}" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputZip">Phone Number</label>
+                <input type="tel" class="form-control" id="phone" name="phone" pattern="[6-9][0-9]{9}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Place Order</button>
+
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+
+if (localStorage.getItem('cart') == null) {
+    var cart = {};
+} else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+}
+console.log(cart);
+var sum = 0;
+if ($.isEmptyObject(cart)) {
+    //if object is empty
+    myStr = `<p>Your cart is empty, please add some items to your cart before checking out!</p>`
+    $('#items').append(myStr);
+} else {
+    let total=0;
+    for (item in cart) {
+        let name = cart[item][1];
+        let qty = cart[item][0];
+        let price=parseInt(cart[item][2])*parseInt(cart[item][0]);
+        let img=cart[item][3];
+        total=total+price;
+        sum = sum + qty;
+        myStr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+                   <img src="`+img+`" style="height:50px;width:70px">
+                    <span>Product:${name}</span>
+                    <span class="badge badge-primary badge-pill q1">qty:${qty}</span>
+                    <span class="badge badge-primary badge-pill">price:₹${price}</span>
+                </li>`;
+
+        $('#items').append(myStr);
+    }
+    str=`<li class="list-group-item d-flex justify-content-between align-items-center bg-light"><div  style="width:100%;align:center"><center><font size="5" color="black">total:₹<span class="badge badge-primary badge-pill" id="totalPrice">${total}</span></font></center></div></li>`
+    $('#items').append(str);
+}
+document.getElementById('cart').innerHTML = sum;
+$('#itemsJson').val(JSON.stringify(cart));
+{% if thank %}
+alert('Thanks for ordering with us. Your order id is {{id}}. Use it to track your order using our order tracker');
+localStorage.clear();
+document.location = "";
+{% endif %}
+$('#amount').val($('#totalPrice').html())
+
+</script>
+{% endblock %}
