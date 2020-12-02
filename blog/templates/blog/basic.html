@@ -8,9 +8,16 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <title>{% block title%} {% endblock %}</title>
-
+    <style>
+      html,
+      body {
+        background:cyan;
+        height: 100%; 
+      }
+      {% block css%} {% endblock %}
+    </style>
   </head>
-  <body>
+  <body data-spy="scroll" data-offset="65">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="/shop">My Awesome Cart</a>
@@ -42,10 +49,7 @@
         <a class="nav-link" href="/blog">Blog<span class="sr-only">(current)</span></a>
       </li>
     </ul>
-    <div class="navbar-nav">
-              <a class="nav-item nav-link" href="/register">Login</a>
-              <a class="nav-item nav-link" href="/register">Register</a>
-    </div>
+  
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

@@ -1,5 +1,24 @@
 {% extends 'blog/basic.html' %}
 {%block title%}blogPost{%endblock%}
+{% block css%}
+      html,
+      body {
+        background:cyan;
+        height: 100%; 
+      }
+.container::before{
+    background-size:cover;
+    background-color:#00F0F0;
+    content: "";
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100vw;
+    height: cover;
+    z-index: -1;
+    opacity:0.6;
+  }
+ {% endblock %}
 {% block body %}
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v6.0"></script>
 <div class="container">
