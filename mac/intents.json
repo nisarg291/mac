@@ -1,0 +1,42 @@
+{"intents": [
+    {"tag": "greeting",
+     "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day","hello"],
+     "responses": ["Hello, thanks for visiting,how can I help", "yes,Good to see you again,how can I help", "Hi there, how can I help?"],
+     "context_set": ""
+    },
+    {"tag": "goodbye",
+     "patterns": ["Bye", "See you later", "Goodbye"],
+     "responses": ["See you later, thanks for visiting", "Have a nice day", "Bye! Come back again soon."]
+    },
+    {"tag": "thanks",
+     "patterns": ["Thanks", "Thank you", "That's helpful"],
+     "responses": ["Happy to help!", "Any time!", "My pleasure"]
+    },
+    {"tag": "hours",
+     "patterns": ["What hours are you open?", "What are your hours?", "When are you open?","how many hours does your website keeps open?" ],
+     "responses": ["We're open every day 24hours", "Our hours are 24hrs every day","We're open every day 24hours"]
+    },
+    {"tag": "location",
+     "patterns": ["where is your location?", "Where are you located?", "What is your address?", "Where is your restaurant situated?" ],
+     "responses": ["We are on the JivrajPark,Ahmedabad,Gujarat","We are on the JivrajPark, Ahmedabad, Gujarat", "We are situated at the  JivrajPark, Ahmedabad, Gujarat ", "Our Address is: c/5 dikshanti app.,near devas flat,malav talav road, JivrajPark, Ahmedabad, Gujarat"]
+    },
+    {"tag": "payments",
+     "patterns": ["payments methods","Do you take credit cards?", "Do you accept Mastercard?", "Are you cash only?","how many payments method are available?" ],
+     "responses": ["We accept VISA, Mastercard,debit card,credit card and Paypal", "We accept most major debit card,credit card","we provide cash,debit card,credit card,vise and using paypal account"]
+    },
+    {"tag": "todaysoffers",
+     "patterns": ["What is your offer for today?", "What are you serving today?", "What is today's special?"],
+     "responses": ["Today's special offer is for  men section", "Our speciality for today is for men section"]
+    },
+    {"tag": "track",
+     "patterns": ["How I can track my order?", "How many days are rest for delivery", "Can you tell me the which date my order is come?", "which date is my order delivery date"],
+     "responses": ["You can track your order in Tracker menu option", "You can track the order in Tracker option which is given in navbar", "You can check your order details in the Tracker menu option"]
+    },
+    {"tag": "deliveryoption",
+     "patterns": ["Do you provide home delivery?", "Do you deliver the food?", "What are the home delivery options?" ],
+     "responses": ["Yes, we provide home delivery through Amazon and flipcart and Our own delivery boys", "We have home delivery options through Amazon and flipcart and Our own delivery boys"],
+     "context_set": "delivery"
+    }
+    
+]
+}
